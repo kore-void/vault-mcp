@@ -1,0 +1,39 @@
+{
+  "name": "vault-mcp",
+  "version": "1.0.0",
+  "description": "MCP server that connects Claude Code to a local markdown knowledge vault",
+  "type": "module",
+  "main": "dist/index.js",
+  "author": "kore-void",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kore-void/vault-mcp.git"
+  },
+  "homepage": "https://github.com/kore-void/vault-mcp",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "vault",
+    "claude",
+    "claude-code",
+    "knowledge-base",
+    "markdown",
+    "ai",
+    "agents"
+  ],
+  "scripts": {
+    "build": "node_modules/.bin/tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.8.0"
+  }
+}
