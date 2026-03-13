@@ -6,6 +6,7 @@ Your vault is a directory of `.md` files — project docs, knowledge crystals, s
 
 ## Features
 
+### Core Vault Tools
 - **`vault_context`** — Load `AGENTS.md` + `session_state.md` in one call (L0 onboarding)
 - **`vault_read`** — Read any `.md` file by relative path
 - **`vault_search`** — Full-text search across all markdown files, with optional pillar filter
@@ -13,6 +14,21 @@ Your vault is a directory of `.md` files — project docs, knowledge crystals, s
 - **`vault_update_session`** — Overwrite `onboarding/session_state.md`
 - **`vault_chronicle`** — Append an entry to the current month's chronicle log
 - **`vault_memory`** — Overwrite files in `memory/` directory
+- **`vault_save_research`** — Save research output to `vault/knowledge/{domain}/{file}.md`
+
+### Web Research Tools
+- **`vault_web_search`** — Web search via Tavily (requires `TAVILY_API_KEY`)
+- **`vault_fetch_page`** — Fetch any URL as clean markdown via Jina Reader (free)
+- **`vault_search_papers`** — Search arXiv + Semantic Scholar for academic papers
+
+### Browser Automation (Playwright)
+- **`vault_browser_fetch`** — Load URL in headless Chrome, return page text
+- **`vault_browser_screenshot`** — Screenshot any URL, save to vault
+- **`vault_browser_extract`** — Extract structured data from a page via CSS selector
+- **`vault_browser_eval`** — Run JavaScript in a browser page and return result
+
+### Diagram Rendering
+- **`vault_mermaid`** — Render a Mermaid diagram in the browser (requires Chrome)
 
 ### Built-in Guards
 
@@ -30,11 +46,27 @@ Your vault is a directory of `.md` files — project docs, knowledge crystals, s
 
 ## Installation
 
+### Option A — npx (no install needed)
+
+```bash
+claude mcp add --scope user vault npx @kore-void/vault-mcp
+```
+
+### Option B — global install
+
+```bash
+npm install -g @kore-void/vault-mcp
+claude mcp add --scope user vault vault-mcp
+```
+
+### Option C — from source
+
 ```bash
 git clone https://github.com/kore-void/vault-mcp.git
 cd vault-mcp
 npm install
 npm run build
+claude mcp add --scope user vault node /path/to/vault-mcp/dist/index.js
 ```
 
 ## Vault Structure
@@ -57,31 +89,33 @@ vault/
 
 ## Configuration
 
-By default, vault-mcp looks for your vault at `C:\CODE\vault`.
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `VAULT_PATH` | `C:\CODE\vault` | Path to your markdown vault directory |
+| `TAVILY_API_KEY` | — | Required for `vault_web_search` (get at tavily.com) |
+| `GMAIL_CREDENTIALS_PATH` | — | Optional: path to Gmail OAuth credentials JSON |
+| `IG_SESSION_PATH` | — | Optional: path to Instagram session file |
 
-Override with the `VAULT_PATH` environment variable:
-
-```bash
-VAULT_PATH=/path/to/your/vault node dist/index.js
-```
-
-## Register with Claude Code
-
-```bash
-# Default vault path (C:\CODE\vault)
-claude mcp add vault node /path/to/vault-mcp/dist/index.js
-
-# Custom vault path
-claude mcp add vault \
-  --env VAULT_PATH=/path/to/your/vault \
-  node /path/to/vault-mcp/dist/index.js
-```
-
-Verify:
+### With Claude Code (user scope — available everywhere)
 
 ```bash
+# npx — simplest, no install
+claude mcp add --scope user vault \
+  --env VAULT_PATH=/path/to/vault \
+  --env TAVILY_API_KEY=tvly-xxx \
+  npx @kore-void/vault-mcp
+
+# Verify
 claude mcp list
-# vault: node /path/to/vault-mcp/dist/index.js - ✓ Connected
+```
+
+### With Claude Code (project scope — per repo)
+
+```bash
+# Add to .claude.json in your project
+claude mcp add vault \
+  --env VAULT_PATH=/path/to/vault \
+  npx @kore-void/vault-mcp
 ```
 
 ## MCP Prompts (slash commands in Claude Code)

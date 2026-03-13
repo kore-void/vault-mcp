@@ -1,9 +1,19 @@
 {
-  "name": "vault-mcp",
-  "version": "1.0.0",
+  "name": "@kore-void/vault-mcp",
+  "version": "1.1.0",
   "description": "MCP server that connects Claude Code to a local markdown knowledge vault",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "vault-mcp": "bin/vault-mcp.js"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
   "author": "kore-void",
   "license": "MIT",
   "repository": {
@@ -29,6 +39,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
+    "playwright-core": "^1.58.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
